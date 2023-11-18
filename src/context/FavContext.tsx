@@ -9,7 +9,6 @@ type FavContextType = {
     deleteFav: (id: number | string) => void;
   };
   
-  // Create the context with the specified type
   export const FavContext = createContext<FavContextType>({
     favPokemon: [],
     addFav: () => {},

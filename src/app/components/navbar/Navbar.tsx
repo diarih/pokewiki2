@@ -2,9 +2,11 @@
 
 import React from 'react'
 import { usePathname } from 'next/navigation'
+import { SearchProvider } from '@/context/SearchContext'
+import Search from '../search/Search'
 
 export default function Navbar() {
-    
+
     const pathname = usePathname()
 
     const isHome = pathname === '/'
@@ -21,12 +23,17 @@ export default function Navbar() {
     )
 
     return (
-        <div className="navbar bg-base-300">
+        <div className="navbar bg-base-300 p-8">
             <div className="navbar-start">
                 {!isHome && backButton}
             </div>
-            <div className="navbar-center">
+            <div className="navbar-center flex flex-col">
                 <a href="/" className="btn btn-ghost normal-case text-xl">PokeWiki</a>
+                <div>
+                    <SearchProvider>
+                        <Search />
+                    </SearchProvider>
+                </div>
             </div>
             <div className="navbar-end">
             </div>

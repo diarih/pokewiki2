@@ -58,7 +58,7 @@ export default function List() {
 
     const [type, setType] = useState("all")
 
-    const { favPokemon, addFav } = useContext(FavContext)
+    const { addFav } = useContext(FavContext)
 
     const { data: typeData } = useQuery(
         'type',
