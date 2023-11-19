@@ -97,7 +97,7 @@ export default async function asyPage({ params }: { params: { slug: string } }) 
                                         {e.base_stat}
                                     </div>
                                 </div>
-                                <progress className={`progress w-full ${colorStat}`} value={e.base_stat} max="100"></progress>
+                                <progress className={`progress w-full ${colorStat}`} value={e.base_stat} max="255"></progress>
                             </div>
                         )
                     })}
