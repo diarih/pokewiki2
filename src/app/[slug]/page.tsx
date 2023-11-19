@@ -2,6 +2,7 @@ import { FavContext } from "@/context/FavContext";
 import Image from "next/image";
 import { useContext } from "react";
 import Favorite from "./components/favorite";
+import { statPokemon } from "@/utils/helpers/statPokemon";
 
 interface About {
     about: string
@@ -83,18 +84,23 @@ export default async function asyPage({ params }: { params: { slug: string } }) 
                         </div>
                     </div>
                 </div>
-                <div className="stats shadow">
-
+                <div className="w-full flex flex-col gap-3">
                     {data.stats.map((e, i: number) => {
+                        const colorStat = statPokemon(e.stat.name)
                         return (
-                            <div key={i} className="stat place-items-center">
-                                <div className="stat-title capitalize">{e.stat.name}</div>
-                                <div className="stat-value">{e.base_stat}</div>
-                                <div className="stat-desc">Pokemon</div>
+                            <div key={i}>
+                                <div className="flex justify-between">
+                                    <div className="capitalize">
+                                        {e.stat.name}
+                                    </div>
+                                    <div>
+                                        {e.base_stat}
+                                    </div>
+                                </div>
+                                <progress className={`progress w-full ${colorStat}`} value={e.base_stat} max="100"></progress>
                             </div>
                         )
                     })}
-
                 </div>
             </section>
         </>
