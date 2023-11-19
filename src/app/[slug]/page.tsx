@@ -32,8 +32,8 @@ export default async function asyPage({ params }: { params: { slug: string } }) 
 
     const data = await getPokemon(params.slug)
 
-    const image = data.sprites.other["official-artwork"].front_default
-    const imageAlt = data.sprites.other.dream_world.front_default
+    const image = data.sprites.front_default
+    const imageAlt = data.sprites.front_shiny
 
     return (
         <>
