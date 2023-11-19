@@ -7,42 +7,48 @@ type FavContextType = {
     favPokemon: Pokemon[];
     addFav: (newFav: Pokemon) => void;
     deleteFav: (id: number | string) => void;
-  };
-  
-  export const FavContext = createContext<FavContextType>({
+};
+
+export const FavContext = createContext<FavContextType>({
     favPokemon: [],
-    addFav: () => {},
-    deleteFav: () => {}
-  });
+    addFav: () => { },
+    deleteFav: () => { }
+});
 
 
-export const FavProvider = ({children}: {children: React.ReactNode}) => {
+export const FavProvider = ({ children }: { children: React.ReactNode }) => {
 
     const [favPokemon, setFavPokemon] = useState<Array<Pokemon>>([]);
 
+    const updateAndSaveFavPokemon = (updatedFavs: Pokemon[]) => {
+        setFavPokemon(updatedFavs);
+        saveToLocalStorage("favPokemon", updatedFavs);
+    };
+
     const addFav = (newFav: Pokemon) => {
         if (!favPokemon.some((fav) => fav.id === newFav.id)) {
-            setFavPokemon([...favPokemon, newFav]);
+            const updatedFavs = [...favPokemon, newFav];
+            updateAndSaveFavPokemon(updatedFavs);
         } else {
-            deleteFav(newFav.id)
+            deleteFav(newFav.id);
         }
-    }
-
+    };
+    
     const deleteFav = (id: number | string) => {
-        const updatedFavs =  favPokemon.filter((post) => post.id !== id);
-        setFavPokemon(updatedFavs);
-    }
+        const updatedFavs = favPokemon.filter((fav) => fav.id !== id);
+        updateAndSaveFavPokemon(updatedFavs);
+    };
 
     useEffect(() => {
-        setFavPokemon(loadFromLocalStorage("favPokemon"))
+        const load = loadFromLocalStorage("favPokemon")
+        if (load.length > 0) {
+            setFavPokemon(load)
+        }
     }, [])
 
-    useEffect(() => {
-        saveToLocalStorage("favPokemon", favPokemon)
-    }, [favPokemon])
 
     return (
-        <FavContext.Provider value={{favPokemon, addFav, deleteFav}}>
+        <FavContext.Provider value={{ favPokemon, addFav, deleteFav }}>
             <div>{children}</div>
         </FavContext.Provider>
     )

@@ -10,7 +10,7 @@ export default function LabelTypePokemon({
 }) {
 
     const {bg_color, text_color} = matchType(typePokemon)
-
+    
     return (
         <div className={`badge font-semibold text-xs capitalize ${bg_color} ${text_color}`}>{children}</div>
     )
